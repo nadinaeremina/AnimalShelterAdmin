@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+    <!-- подключение стилей bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>[[${pageTitle}]]</h2></div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nickname</th>
+                <th>Type</th>
+                <th>Breed</th>
+                <th>Age</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="animal : ${animals}">
+                <tr>
+                    <td>[[${animal.id}]]</td>
+                    <td>[[${animal.nickname}]]</td>
+                    <td>[[${animal.type}]]</td>
+                    <td>[[${animal.breed}]]</td>
+                    <td>[[${animal.age}]]</td>
+                    <td>[[${animal.description}]]</td>
+                    <td>[[${animal.location}]]</td>
+                    <td>
+                        <a class="h4 mr-3" th:href="@{'/animals/edit/' + ${animal.id}}">Edit</a>
+                        <a class="h4" th:href="@{'/animals/delete/' + ${animal.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div>
+            <a class="h3" th:href="@{/index}">Go back</a>
+        </div>
+    </div>
+</div>
+
+<!-- подключение скриптов bootstrap -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
