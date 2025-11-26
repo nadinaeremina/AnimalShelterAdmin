@@ -18,6 +18,7 @@
                 <th>Type</th>
                 <th>Breed</th>
                 <th>Age</th>
+                <th>Photo:</th>
                 <th>Description</th>
                 <th>Location</th>
                 <th></th>
@@ -31,6 +32,7 @@
                     <td>[[${animal.type}]]</td>
                     <td>[[${animal.breed}]]</td>
                     <td>[[${animal.age}]]</td>
+                    <td><img th:src="@{'data:image/jpeg;base64,' + ${animal.photo}}"></td>
                     <td>[[${animal.description}]]</td>
                     <td>[[${animal.location}]]</td>
                     <td>

@@ -1,8 +1,14 @@
 package org.top.animalshelter.animal;
 
 import jakarta.persistence.*;
+import org.top.animalshelter.city.City;
 import org.top.animalshelter.user.User;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.time.Year;
 
 @Entity
@@ -27,16 +33,30 @@ public class Animal {
     @Column(name="yearOfBirth_f", nullable = false, length = 4)
     private Integer yearOfBirth;
 
+    @Lob
+    @Column(name="photo_f", columnDefinition = "MEDIUMBLOB")
+    private String photo;
+
     @Column(name="description_f", nullable = false, length = 200)
     private String description;
-
-    @Column(name="location_f", nullable = false, length = 50)
-    private String location;
 
     // связь с сущностью (таблицей) пользователей
     @ManyToOne
     @JoinColumn(name="user_id", nullable = false)
     private User user;
+
+    // связь с сущностью (таблицей) городов
+    @ManyToOne
+    @JoinColumn(name="city_id", nullable = false)
+    private City city;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
     public Integer getId() {
         return id;
@@ -90,14 +110,6 @@ public class Animal {
         this.user = user;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public Integer getYearOfBirth() {
         return yearOfBirth;
     }
@@ -107,16 +119,15 @@ public class Animal {
         this.yearOfBirth = Year.now().getValue() - this.age;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "id=" + id +
-                ", nickname='" + nickname + '\'' +
-                ", type='" + type + '\'' +
-                ", breed='" + breed + '\'' +
-                ", age='" + age + '\'' +
-                ", description='" + description + '\'' +
-                ", location='" + location + '\'' +
-                '}';
+    public City getCity() {
+        return city;
+    }
+
+    public String getCityTitle() {
+        return city.getTitle();
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }

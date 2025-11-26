@@ -1,7 +1,13 @@
 package org.top.animalshelter.animal;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Lob;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Blob;
 import java.time.Year;
 
 public class AnimalCreateData {
@@ -12,8 +18,9 @@ public class AnimalCreateData {
     private Integer age;
     private Integer yearOfBirth;
     private String description;
-    private String location;
+    private String cityId;
     private Integer userId;
+    private MultipartFile photo;
 
     public AnimalCreateData() {}
 
@@ -49,12 +56,12 @@ public class AnimalCreateData {
         return nickname;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCityId() {
+        return cityId;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
     public void setUserId(Integer userId) {
@@ -79,6 +86,14 @@ public class AnimalCreateData {
 
     public Integer getYearOfBirth() {
         return yearOfBirth;
+    }
+
+    public MultipartFile getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(MultipartFile photo) {
+        this.photo = photo;
     }
 
     public void setAge(Integer age) {

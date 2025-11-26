@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Manage Cities</title>
+    <!-- подключение стилей bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+    <div><h2>Manage Cities</h2></div>
+    <div class="m-2">
+        <a class="h3" th:href="@{/cities/new}">Add New City</a>
+    </div>
+
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="city : ${listCities}">
+                <tr>
+                    <td>[[${city.id}]]</td>
+                    <td>[[${city.title}]]</td>
+                    <td>
+                        <a class="h4" th:href="@{'/cities/delete/' + ${city.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        <div>
+            <a class="h3" th:href="@{/index}">Go back</a>
+        </div>
+    </div>
+</div>
+
+<!-- подключение скриптов bootstrap -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

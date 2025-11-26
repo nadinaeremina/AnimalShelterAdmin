@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalNotFoundException;
 import org.top.animalshelter.animal.AnimalRepository;
+import org.top.animalshelter.city.City;
+import org.top.animalshelter.city.CityNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
