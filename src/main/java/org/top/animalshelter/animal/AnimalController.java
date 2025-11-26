@@ -10,12 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.city.CityService;
+import org.top.animalshelter.type.Type;
+import org.top.animalshelter.type.TypeService;
 import org.top.animalshelter.user.User;
 import org.top.animalshelter.user.UserNotFoundException;
 import org.top.animalshelter.user.UserService;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -25,11 +28,14 @@ public class AnimalController {
     private final AnimalService animalService;
     private final CityService cityService;
     private final UserService userService;
+    private final TypeService typeService;
 
-    public AnimalController(AnimalService animalService, CityService cityService, UserService userService) {
+    public AnimalController(AnimalService animalService, CityService cityService, UserService userService,
+                            TypeService typeService) {
         this.animalService = animalService;
         this.cityService = cityService;
         this.userService = userService;
+        this.typeService = typeService;
     }
 
     @GetMapping("/animals")
@@ -46,8 +52,16 @@ public class AnimalController {
     @GetMapping("/animals/new")
     public String showNewForm(Model model) {
         List<City> listCities = cityService.listAll();
+        List<User> listUsers = userService.listAll();
+        List<Type> listTypes = typeService.listAll();
+        List<Integer> listBreeds = new ArrayList<Integer>();
+        listBreeds.add(1);
+        listBreeds.add(2);
         model.addAttribute("animalCreateData", new AnimalCreateData());
         model.addAttribute("listCities", listCities);
+        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("listTypes", listTypes);
+        model.addAttribute("listBreeds", listBreeds);
         model.addAttribute("pageTitle", "Adding a new pet:");
         return "animal_form";
     }
@@ -71,8 +85,6 @@ public class AnimalController {
             }
 
             // заполнили данные животного
-            animal.setType(animalCreateData.getType());
-            animal.setBreed(animalCreateData.getBreed());
             animal.setAge(animalCreateData.getAge());
             animal.setNickname(animalCreateData.getNickname());
             animal.setDescription(animalCreateData.getDescription());
@@ -84,6 +96,9 @@ public class AnimalController {
 
             City animalCity = cityService.get(Integer.parseInt(animalCreateData.getCityId()));
             animal.setCity(animalCity);
+
+            Type animalType = typeService.get(Integer.parseInt(animalCreateData.getTypeId()));
+            animal.setType(animalType);
 
             // сохранить в БД
             animalService.save(animal);
@@ -111,12 +126,10 @@ public class AnimalController {
             animalCreateData.setDescription(animal.getDescription());
             animalCreateData.setId(animal.getId());
             animalCreateData.setAge(animal.getAge());
-            animalCreateData.setType(animal.getType());
-            animalCreateData.setBreed(animal.getBreed());
             animalCreateData.setNickname(animal.getNickname());
             animalCreateData.setUserId(animal.getUser().getId());
             animalCreateData.setCityId(Integer.toString(animal.getCity().getId()));
-            // animalCreateData.setPhoto(animal.getPhoto());
+            animalCreateData.setTypeId(Integer.toString(animal.getType().getId()));
 
             model.addAttribute("animalCreateData", animalCreateData);
             model.addAttribute("pageTitle",

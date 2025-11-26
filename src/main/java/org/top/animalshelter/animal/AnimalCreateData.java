@@ -3,6 +3,7 @@ package org.top.animalshelter.animal;
 import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import org.springframework.web.multipart.MultipartFile;
+import org.top.animalshelter.type.Type;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
@@ -13,8 +14,8 @@ import java.time.Year;
 public class AnimalCreateData {
     private Integer id;
     private String nickname;
-    private String type;
-    private String breed;
+    private String typeId;
+    private String breedId;
     private Integer age;
     private Integer yearOfBirth;
     private String description;
@@ -44,12 +45,8 @@ public class AnimalCreateData {
         return age;
     }
 
-    public String getBreed() {
-        return breed;
-    }
-
     public String getType() {
-        return type;
+        return typeId;
     }
 
     public String getNickname() {
@@ -72,12 +69,8 @@ public class AnimalCreateData {
         this.description = description;
     }
 
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public void setTypeId(String typeId) {
+        this.typeId = typeId;
     }
 
     public void setNickname(String nickname) {
@@ -99,5 +92,17 @@ public class AnimalCreateData {
     public void setAge(Integer age) {
         this.age = age;
         this.yearOfBirth = Year.now().getValue() - this.age;
+    }
+
+    public String getTypeId() {
+        return typeId;
+    }
+
+    public String getBreedId() {
+        return breedId;
+    }
+
+    public void setBreedId(String breedId) {
+        this.breedId = breedId;
     }
 }

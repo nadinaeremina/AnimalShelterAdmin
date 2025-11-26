@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Manage Types</title>
+  <!-- подключение стилей bootstrap -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+  <div><h2>Manage Types</h2></div>
+  <div class="m-2">
+    <a class="h3" th:href="@{/types/new}">Add New Type</a>
+  </div>
+
+  <div th:if="${message}" class="alert alert-success text-center">
+    [[${message}]]
+  </div>
+
+  <div>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Breed</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="type : ${listTypes}">
+        <tr>
+          <td>[[${type.id}]]</td>
+          <td>[[${type.title}]]</td>
+          <td>[[${type.breed}]]</td>
+          <td>
+            <a class="h4 mr-3" th:href="@{'/types/edit/' + ${type.id}}">Edit</a>
+            <a class="h4" th:href="@{'/types/delete/' + ${type.id}}">Delete</a>
+          </td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+    <div>
+      <a class="h3" th:href="@{/index}">Go back</a>
+    </div>
+  </div>
+</div>
+
+<!-- подключение скриптов bootstrap -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

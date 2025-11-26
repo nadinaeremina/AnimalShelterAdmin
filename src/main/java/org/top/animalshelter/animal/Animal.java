@@ -2,6 +2,7 @@ package org.top.animalshelter.animal;
 
 import jakarta.persistence.*;
 import org.top.animalshelter.city.City;
+import org.top.animalshelter.type.Type;
 import org.top.animalshelter.user.User;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -10,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.time.Year;
+import java.util.Set;
 
 @Entity
 @Table(name = "animals")
@@ -20,12 +22,6 @@ public class Animal {
 
     @Column(name="nickname_f", nullable = false, length = 45)
     private String nickname;
-
-    @Column(name="type_f", nullable = false, length = 30)
-    private String type;
-
-    @Column(name="breed_f", nullable = false, length = 45)
-    private String breed;
 
     @Column(name="age_f", nullable = false, length = 3)
     private Integer age;
@@ -50,6 +46,11 @@ public class Animal {
     @JoinColumn(name="city_id", nullable = false)
     private City city;
 
+    // связь с сущностью (таблицей) видов
+    @ManyToOne
+    @JoinColumn(name="type_id", nullable = false)
+    private Type type;
+
     public String getPhoto() {
         return photo;
     }
@@ -62,16 +63,8 @@ public class Animal {
         return id;
     }
 
-    public String getType() {
-        return type;
-    }
-
     public String getNickname() {
         return nickname;
-    }
-
-    public String getBreed() {
-        return breed;
     }
 
     public Integer getAge() {
@@ -88,14 +81,6 @@ public class Animal {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
     }
 
     public void setDescription(String description) {
@@ -123,11 +108,31 @@ public class Animal {
         return city;
     }
 
+    public String getTypeTitle() {
+        return type.getTitle();
+    }
+
+    public String getTypeBreed() {
+        return type.getBreed();
+    }
+
     public String getCityTitle() {
         return city.getTitle();
     }
 
+    public String getUserName() {
+        return user.getFirstName();
+    }
+
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

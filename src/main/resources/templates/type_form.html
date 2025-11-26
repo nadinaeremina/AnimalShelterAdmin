@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+  <!-- подключение стилей bootstrap -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+  <form th:action="@{/types/save}" method="post"
+        th:object="${type}" style="max-width: 500px; margin: 0 auto;">
+    <div class="border border-secondary rounded p-3">
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Title:</label>
+        <div class="col-sm-8">
+          <input type="text" th:field="*{title}" class="form-control" required
+                 minlength="1" maxlength="45"/>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-4 col-form-label">Breed:</label>
+        <div class="col-sm-8">
+          <input type="text" th:field="*{breed}" class="form-control" required
+                 minlength="1" maxlength="45"/>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary m-2">Save</button>
+        <button type="button" class="btn btn-secondary m-2"
+                onclick="cancelForm()">Exit</button>
+      </div>
+    </div>
+  </form>
+  <div th:if="${message}" class="alert alert-success text-center">
+    [[${message}]]
+  </div>
+</div>
+
+<script type="text/javascript">
+  function cancelForm() {
+      window.location = "[[@{/cities}]]";
+  }
+</script>
+</body>
+</html>

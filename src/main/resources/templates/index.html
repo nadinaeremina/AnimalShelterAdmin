@@ -2,16 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>administrative panel</title>
     <!-- подключение стилей bootstrap -->
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1>Welcome</h1>
-    <a class="h2" th:href="@{/animals}">Manage Animals</a>
-    <a class="h2" th:href="@{/users}">Manage Users</a></a>
-    <a class="h2" th:href="@{/cities}">Manage Cities</a></a>
+    <h1>Welcome to the administrative panel!</h1>
+    <ul>
+        <li><a class="h2" th:href="@{/animals}">Manage Animals</a></li>
+        <li><a class="h2" th:href="@{/users}">Manage Users</a></li>
+        <li><a class="h2" th:href="@{/cities}">Manage Cities</a></li>
+        <li><a class="h2" th:href="@{/types}">Manage Types</a></li>
+    </ul>
 </div>
 
 <!-- подключение скриптов bootstrap -->
