@@ -40,7 +40,7 @@ public class AnimalService {
         animalRepository.deleteById(id);
     }
 
-    public List<Animal> showAll(Integer id) throws UserNotFoundException {
+    public List<Animal> showAllByUserId(Integer id) throws UserNotFoundException {
         List<Animal> animals = animalRepository.findAllByUserId(id);
         if (animals.isEmpty()) {
             throw new UserNotFoundException("Could not find any pets with User ID" + id);

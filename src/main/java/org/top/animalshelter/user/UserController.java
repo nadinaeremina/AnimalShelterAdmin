@@ -77,7 +77,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     public String getUserAnimals(@PathVariable("id") Integer id, RedirectAttributes ra, Model model) {
         try {
-            List<Animal> animals = animalService.showAll(id);
+            List<Animal> animals = animalService.showAllByUserId(id);
             model.addAttribute("animals", animals);
             model.addAttribute("pageTitle",
                     "Pets of User (ID: " + id + ")");
