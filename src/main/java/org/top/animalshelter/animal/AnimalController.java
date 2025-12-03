@@ -43,10 +43,10 @@ public class AnimalController {
         this.mainController = mainController;
     }
 
-//    @GetMapping("/")
-//    public String showHomePage(Model model) {
-//        return findPaginated(1, model);
-//    }
+    @GetMapping("/")
+    public String showHomePage(Model model) {
+        return mainController.findPaginated(1, "", "nickname", "asc", model);
+    }
 
     @GetMapping("/animals")
     public String showList(Model model, RedirectAttributes ra) {
@@ -56,7 +56,7 @@ public class AnimalController {
         } catch (Exception ex) {
             model.addAttribute("message", ex.getCause());
         }
-        return mainController.findPaginated(1, "animals", model);
+        return mainController.findPaginated(1, "animals", "nickname", "asc", model);
     }
 
     @GetMapping("/animals/new")

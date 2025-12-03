@@ -3,6 +3,7 @@ package org.top.animalshelter.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.top.animalshelter.animal.Animal;
@@ -47,8 +48,10 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public Page<User> findPaginated(Integer pageNumber, int pageSize) {
-        PageRequest pageable= PageRequest.of(pageNumber - 1, pageSize);
+    public Page<User> findPaginated(Integer pageNumber, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+                Sort.by(sortField).descending();
+        PageRequest pageable= PageRequest.of(pageNumber - 1, pageSize, sort);
         return this.userRepository.findAll(pageable);
     }
 }

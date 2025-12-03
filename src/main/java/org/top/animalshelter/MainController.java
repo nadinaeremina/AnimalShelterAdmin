@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalService;
 import org.top.animalshelter.city.City;
@@ -38,42 +39,44 @@ public class MainController {
         return "index";
     }
 
+    // /page/1?sortField=name&sortDir=asc
     @GetMapping("/page/{number}/{object}")
     public String findPaginated(@PathVariable("number") Integer pageNumber,
                                 @PathVariable("object") String object,
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
                                 Model model) {
         int pageSize = 5;
-
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
         if (object.equals("animals")) {
-            Page<Animal> page = animalService.findPaginated(pageNumber, pageSize);
+            Page<Animal> page = animalService.findPaginated(pageNumber, pageSize, sortField, sortDir);
             List<Animal> listAnimals = page.getContent();
             model.addAttribute("listAnimals", listAnimals);
             model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("currentPage", pageNumber);
             model.addAttribute("totalItems", page.getTotalElements());
             return "animals";
         } else if (object.equals("users")) {
-            Page<User> page = userService.findPaginated(pageNumber, pageSize);
+            Page<User> page = userService.findPaginated(pageNumber, pageSize, sortField, sortDir);
             List<User> listUsers= page.getContent();
             model.addAttribute("listUsers", listUsers);
             model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("currentPage", pageNumber);
             model.addAttribute("totalItems", page.getTotalElements());
             return "users";
         } else if (object.equals("cities")) {
-            Page<City> page = cityService.findPaginated(pageNumber, pageSize);
+            Page<City> page = cityService.findPaginated(pageNumber, pageSize, sortField, sortDir);
             List<City> listCities = page.getContent();
             model.addAttribute("listCities", listCities);
             model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("currentPage", pageNumber);
             model.addAttribute("totalItems", page.getTotalElements());
             return "cities";
         } else if (object.equals("types")) {
-            Page<Type> page = typeService.findPaginated(pageNumber, pageSize);
+            Page<Type> page = typeService.findPaginated(pageNumber, pageSize, sortField, sortDir);
             List<Type> listTypes = page.getContent();
             model.addAttribute("listTypes", listTypes);
             model.addAttribute("totalPages", page.getTotalPages());
-            model.addAttribute("currentPage", pageNumber);
             model.addAttribute("totalItems", page.getTotalElements());
             return "types";
         }

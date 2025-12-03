@@ -39,7 +39,7 @@ public class UserController {
         } catch (Exception ex) {
             model.addAttribute("message", ex.getCause());
         }
-        return mainController.findPaginated(1, "users", model);
+        return mainController.findPaginated(1, "users", "firstName", "asc", model);
     }
 
     @GetMapping("/users/new")

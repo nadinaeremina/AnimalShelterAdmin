@@ -35,7 +35,7 @@ public class CityController {
         } catch (Exception ex) {
             model.addAttribute("message", ex.getCause());
         }
-        return mainController.findPaginated(1, "cities", model);
+        return mainController.findPaginated(1, "cities", "title", "asc", model);
     }
 
     @GetMapping("/cities/new")

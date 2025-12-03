@@ -33,7 +33,7 @@ public class Typecontroller {
         } catch (Exception ex) {
             model.addAttribute("message", ex.getCause());
         }
-        return mainController.findPaginated(1, "types", model);
+        return mainController.findPaginated(1, "types", "title", "asc",model);
     }
 
     @GetMapping("/types/new")
