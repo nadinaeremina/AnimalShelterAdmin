@@ -1,7 +1,10 @@
 package org.top.animalshelter.type;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.top.animalshelter.animal.Animal;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,5 +40,10 @@ public class TypeService {
             throw new TypeNotFoundException("Could not find any types with ID" + id);
         }
         typeRepository.deleteById(id);
+    }
+
+    public Page<Type> findPaginated(Integer pageNumber, int pageSize) {
+        PageRequest pageable= PageRequest.of(pageNumber - 1, pageSize);
+        return this.typeRepository.findAll(pageable);
     }
 }

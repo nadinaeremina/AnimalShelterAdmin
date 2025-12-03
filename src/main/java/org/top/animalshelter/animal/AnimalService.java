@@ -1,9 +1,12 @@
 package org.top.animalshelter.animal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.top.animalshelter.user.UserNotFoundException;
 
+import java.awt.print.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,5 +49,10 @@ public class AnimalService {
             throw new UserNotFoundException("Could not find any pets with User ID" + id);
         }
         return animals;
+    }
+
+    public Page<Animal> findPaginated(Integer pageNumber, int pageSize) {
+        PageRequest pageable= PageRequest.of(pageNumber - 1, pageSize);
+        return this.animalRepository.findAll(pageable);
     }
 }

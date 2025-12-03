@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.top.animalshelter.MainController;
 import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalCreateData;
 import org.top.animalshelter.animal.AnimalNotFoundException;
@@ -17,16 +18,22 @@ import java.util.List;
 public class Typecontroller {
     @Autowired
     private final TypeService typeService;
+    private final MainController mainController;
 
-    public Typecontroller(TypeService typeService) {
+    public Typecontroller(TypeService typeService, MainController mainController) {
         this.typeService = typeService;
+        this.mainController = mainController;
     }
 
     @GetMapping("/types")
-    public String showList(Model model) {
-        List<Type> listTypes = typeService.listAll();
-        model.addAttribute("listTypes", listTypes);
-        return "types";
+    public String showList(Model model, RedirectAttributes ra) {
+        try {
+            List<Type> listTypes = typeService.listAll();
+            model.addAttribute("listTypes", listTypes);
+        } catch (Exception ex) {
+            model.addAttribute("message", ex.getCause());
+        }
+        return mainController.findPaginated(1, "types", model);
     }
 
     @GetMapping("/types/new")

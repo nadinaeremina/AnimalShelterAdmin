@@ -1,7 +1,10 @@
 package org.top.animalshelter.city;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.user.User;
 import org.top.animalshelter.user.UserNotFoundException;
 import org.top.animalshelter.user.UserRepository;
@@ -40,5 +43,10 @@ public CityService(CityRepository cityRepository) {
             throw new CityNotFoundException("Could not find any pets with ID" + id);
         }
         cityRepository.deleteById(id);
+    }
+
+    public Page<City> findPaginated(Integer pageNumber, int pageSize) {
+        PageRequest pageable= PageRequest.of(pageNumber - 1, pageSize);
+        return this.cityRepository.findAll(pageable);
     }
 }

@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.top.animalshelter.MainController;
 import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalNotFoundException;
 import org.top.animalshelter.animal.AnimalRepository;
 import org.top.animalshelter.animal.AnimalService;
+import org.top.animalshelter.type.Type;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,17 +22,24 @@ public class UserController {
     @Autowired
     private final UserService userService;
     private final AnimalService animalService;
+    private final MainController mainController;
 
-    public UserController(UserService userService, AnimalService animalService) {
+    public UserController(UserService userService, AnimalService animalService,
+                          MainController mainController) {
         this.userService = userService;
         this.animalService = animalService;
+        this.mainController = mainController;
     }
 
     @GetMapping("/users")
-    public String showList(Model model) {
-        List<User> listUsers = userService.listAll();
-        model.addAttribute("listUsers", listUsers);
-        return "users";
+    public String showList(Model model, RedirectAttributes ra) {
+        try {
+            List<User> listUsers = userService.listAll();
+            model.addAttribute("listUsers", listUsers);
+        } catch (Exception ex) {
+            model.addAttribute("message", ex.getCause());
+        }
+        return mainController.findPaginated(1, "users", model);
     }
 
     @GetMapping("/users/new")

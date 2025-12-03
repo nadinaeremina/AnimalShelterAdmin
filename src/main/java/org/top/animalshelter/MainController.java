@@ -1,13 +1,82 @@
 package org.top.animalshelter;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.top.animalshelter.animal.Animal;
+import org.top.animalshelter.animal.AnimalService;
+import org.top.animalshelter.city.City;
+import org.top.animalshelter.city.CityService;
+import org.top.animalshelter.type.Type;
+import org.top.animalshelter.type.TypeService;
+import org.top.animalshelter.user.User;
+import org.top.animalshelter.user.UserService;
+
+import java.util.List;
 
 @Controller
 public class MainController {
+    @Autowired
+    private final AnimalService animalService;
+    private final CityService cityService;
+    private final UserService userService;
+    private final TypeService typeService;
+
+    public MainController(AnimalService animalService, CityService cityService, UserService userService,
+                            TypeService typeService) {
+        this.animalService = animalService;
+        this.cityService = cityService;
+        this.userService = userService;
+        this.typeService = typeService;
+    }
 
     @GetMapping("/index")
     public String showHomePage() {
+        return "index";
+    }
+
+    @GetMapping("/page/{number}/{object}")
+    public String findPaginated(@PathVariable("number") Integer pageNumber,
+                                @PathVariable("object") String object,
+                                Model model) {
+        int pageSize = 5;
+
+        if (object.equals("animals")) {
+            Page<Animal> page = animalService.findPaginated(pageNumber, pageSize);
+            List<Animal> listAnimals = page.getContent();
+            model.addAttribute("listAnimals", listAnimals);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("totalItems", page.getTotalElements());
+            return "animals";
+        } else if (object.equals("users")) {
+            Page<User> page = userService.findPaginated(pageNumber, pageSize);
+            List<User> listUsers= page.getContent();
+            model.addAttribute("listUsers", listUsers);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("totalItems", page.getTotalElements());
+            return "users";
+        } else if (object.equals("cities")) {
+            Page<City> page = cityService.findPaginated(pageNumber, pageSize);
+            List<City> listCities = page.getContent();
+            model.addAttribute("listCities", listCities);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("totalItems", page.getTotalElements());
+            return "cities";
+        } else if (object.equals("types")) {
+            Page<Type> page = typeService.findPaginated(pageNumber, pageSize);
+            List<Type> listTypes = page.getContent();
+            model.addAttribute("listTypes", listTypes);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("currentPage", pageNumber);
+            model.addAttribute("totalItems", page.getTotalElements());
+            return "types";
+        }
         return "index";
     }
 }

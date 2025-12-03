@@ -3,11 +3,14 @@ package org.top.animalshelter.animal;
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.top.animalshelter.MainController;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.city.CityService;
 import org.top.animalshelter.type.Type;
@@ -29,14 +32,21 @@ public class AnimalController {
     private final CityService cityService;
     private final UserService userService;
     private final TypeService typeService;
+    private final MainController mainController;
 
     public AnimalController(AnimalService animalService, CityService cityService, UserService userService,
-                            TypeService typeService) {
+                            TypeService typeService, MainController mainController) {
         this.animalService = animalService;
         this.cityService = cityService;
         this.userService = userService;
         this.typeService = typeService;
+        this.mainController = mainController;
     }
+
+//    @GetMapping("/")
+//    public String showHomePage(Model model) {
+//        return findPaginated(1, model);
+//    }
 
     @GetMapping("/animals")
     public String showList(Model model, RedirectAttributes ra) {
@@ -46,7 +56,7 @@ public class AnimalController {
         } catch (Exception ex) {
             model.addAttribute("message", ex.getCause());
         }
-        return "animals";
+        return mainController.findPaginated(1, "animals", model);
     }
 
     @GetMapping("/animals/new")
