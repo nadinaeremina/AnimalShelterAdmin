@@ -30,6 +30,10 @@ public class CityService {
         cityRepository.save(city);
     }
 
+    public boolean isExist(City city) {
+        return cityRepository.existsByTitle(city.getTitle());
+    }
+
     public City get(Integer id) throws CityNotFoundException {
         Optional<City> result = cityRepository.findById(id);
         if (result.isPresent()) {

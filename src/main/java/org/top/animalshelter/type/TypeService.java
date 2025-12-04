@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.top.animalshelter.animal.Animal;
+import org.top.animalshelter.city.City;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,14 @@ public class TypeService {
 
     public void save(Type type) {
         typeRepository.save(type);
+    }
+
+    public boolean isExistByTitle(Type type) {
+        return typeRepository.existsByTitle(type.getTitle());
+    }
+
+    public boolean isExistByBreed(Type type) {
+        return typeRepository.existsByBreed(type.getBreed());
     }
 
     public Type get(Integer id) throws TypeNotFoundException {

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface TypeRepository extends JpaRepository<Type, Integer> {
     Long countById(Integer id);
+    boolean existsByTitle(String title);
+    boolean existsByBreed(String breed);
 }

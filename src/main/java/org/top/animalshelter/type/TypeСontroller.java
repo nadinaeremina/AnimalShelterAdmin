@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.MainController;
+import org.top.animalshelter.city.City;
 
 import java.util.List;
 
@@ -42,8 +43,11 @@ public class TypeСontroller {
 
     @PostMapping("/types/save")
     public String saveType(Type type, RedirectAttributes ra) {
-        typeService.save(type);
-        ra.addFlashAttribute("message", "The type has been saved successfully.");
+        if (!typeService.isExistByBreed(type) && !typeService.isExistByTitle(type)) {
+            typeService.save(type);
+            ra.addFlashAttribute("message", "The type has been saved successfully.");
+        }
+        ra.addFlashAttribute("message", "The type and breed is already exists.");
         return "redirect:/types";
     }
 

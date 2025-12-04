@@ -11,6 +11,7 @@ import org.top.animalshelter.animal.AnimalNotFoundException;
 import org.top.animalshelter.animal.AnimalRepository;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.city.CityNotFoundException;
+import org.top.animalshelter.type.Type;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,10 @@ public class UserService {
 
     public void save(User user) {
         userRepository.save(user);
+    }
+
+    public boolean isExistByNumber(User user) {
+        return userRepository.existsByNumber(user.getNumber());
     }
 
     public User get(Integer id) throws UserNotFoundException {

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.MainController;
 import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalService;
+import org.top.animalshelter.type.Type;
 
 import java.util.List;
 
@@ -47,8 +48,11 @@ public class UserController {
 
     @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes ra) {
-        userService.save(user);
-        ra.addFlashAttribute("message", "The user has been saved successfully.");
+        if (!userService.isExistByNumber(user)) {
+            userService.save(user);
+            ra.addFlashAttribute("message", "The user has been saved successfully.");
+        }
+        ra.addFlashAttribute("message", "User is already exists.");
         return "redirect:/users";
     }
 

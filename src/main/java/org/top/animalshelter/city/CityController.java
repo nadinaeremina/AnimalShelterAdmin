@@ -47,8 +47,11 @@ public class CityController {
 
     @PostMapping("/cities/save")
     public String saveCity(City city, RedirectAttributes ra) {
-        cityService.save(city);
-        ra.addFlashAttribute("message", "The city has been saved successfully.");
+        if (!cityService.isExist(city)) {
+            cityService.save(city);
+            ra.addFlashAttribute("message", "The city has been saved successfully.");
+        }
+        ra.addFlashAttribute("message", "The city is already exists.");
         return "redirect:/cities";
     }
 
