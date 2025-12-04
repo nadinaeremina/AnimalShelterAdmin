@@ -22,7 +22,9 @@
             <thead class="thead-dark">
             <tr>
                 <th>ID</th>
-                <th>Title</th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '/cities' + '?sortField=title&sortDir=' + ${reverseSortDir}}">Title</a>
+                </th>
                 <th></th>
             </tr>
             </thead>
@@ -46,16 +48,19 @@
             </div>
             <div class = "col-sm-1">
                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}} + '/cities'}">[[${i}]]</a>
+                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}} + '/cities' + '?sortField=' +
+                   ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                     <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
                 </span>
             </div>
             <div class = "col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '/cities'}">NEXT</a>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '/cities +
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">NEXT</a>
                 <span th:unless="${currentPage < totalPages}">NEXT</span>
             </div>
             <div class = "col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '/cities'}">LAST</a>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '/cities' +
+                '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">LAST</a>
                 <span th:unless="${currentPage < totalPages}">LAST</span>
             </div>
         </div>

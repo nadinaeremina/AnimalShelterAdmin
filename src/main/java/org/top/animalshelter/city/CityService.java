@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 public class CityService {
-@Autowired
-private final CityRepository cityRepository;
+    @Autowired
+    private final CityRepository cityRepository;
 
-public CityService(CityRepository cityRepository) {
+    public CityService(CityRepository cityRepository) {
     this.cityRepository = cityRepository;
-}
+    }
 
     public List<City> listAll() {
         return (List<City>) cityRepository.findAll();
