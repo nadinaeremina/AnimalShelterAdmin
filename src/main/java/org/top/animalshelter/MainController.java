@@ -34,6 +34,11 @@ public class MainController {
         this.typeService = typeService;
     }
 
+    @GetMapping("/")
+    public String showHomePage(Model model) {
+        return findPaginated(1, "", "nickname", "asc", model);
+    }
+
     @GetMapping("/index")
     public String showHomePage() {
         return "index";

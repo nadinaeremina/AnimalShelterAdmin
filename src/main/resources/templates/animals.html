@@ -17,16 +17,16 @@
   <div class="m-2">
     <a class="h3" th:href="@{/animals/new}">Add New Animal</a>
   </div>
-
   <div th:if="${message}" class="alert alert-success text-center">
     [[${message}]]
   </div>
-
   <div>
     <table class="table table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th>ID</th>
+        <th>
+          <a th:href="@{'/page/' + ${currentPage} + '/animals' + '?sortField=id&sortDir=' + ${reverseSortDir}}">ID</a>
+        </th>
         <th>
           <a th:href="@{'/page/' + ${currentPage} + '/animals' + '?sortField=nickname&sortDir=' + ${reverseSortDir}}">Nickname</a>
         </th>

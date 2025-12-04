@@ -9,13 +9,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.MainController;
 import org.top.animalshelter.animal.Animal;
-import org.top.animalshelter.animal.AnimalNotFoundException;
-import org.top.animalshelter.animal.AnimalRepository;
 import org.top.animalshelter.animal.AnimalService;
-import org.top.animalshelter.type.Type;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {

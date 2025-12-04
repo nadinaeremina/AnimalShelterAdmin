@@ -8,8 +8,10 @@ import org.top.animalshelter.type.Type;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Blob;
 import java.time.Year;
+import java.util.Base64;
 
 public class AnimalCreateData {
     private Integer id;
@@ -86,6 +88,17 @@ public class AnimalCreateData {
     }
 
     public void setPhoto(MultipartFile photo) {
+//        try {
+//            // преобразование полученных данных в формат БД
+//            String imageDataAsString= Base64
+//                    .getEncoder()
+//                    .encodeToString(
+//                            photo.getBytes()
+//                    );
+//            this.photo = imageDataAsString;
+//        } catch (IOException ex) {
+//            this.photo = "";
+//        }
         this.photo = photo;
     }
 

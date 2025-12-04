@@ -1,6 +1,7 @@
 package org.top.animalshelter.animal;
 
 import jakarta.persistence.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.top.animalshelter.card.Card;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.type.Type;
@@ -9,9 +10,11 @@ import org.top.animalshelter.user.User;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.time.Year;
+import java.util.Base64;
 import java.util.Set;
 
 @Entity
@@ -61,8 +64,19 @@ public class Animal {
         return photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPhoto(MultipartFile photo) {
+        try {
+            // преобразование полученных данных в формат БД
+            String imageDataAsString= Base64
+                    .getEncoder()
+                    .encodeToString(
+                            photo.getBytes()
+                    );
+
+            this.photo = imageDataAsString;
+        } catch (IOException ex) {
+            this.photo = "";
+        }
     }
 
     public Integer getId() {

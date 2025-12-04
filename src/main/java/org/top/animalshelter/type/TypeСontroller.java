@@ -8,19 +8,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.MainController;
-import org.top.animalshelter.animal.Animal;
-import org.top.animalshelter.animal.AnimalCreateData;
-import org.top.animalshelter.animal.AnimalNotFoundException;
 
 import java.util.List;
 
 @Controller
-public class Typecontroller {
+public class TypeСontroller {
     @Autowired
     private final TypeService typeService;
     private final MainController mainController;
 
-    public Typecontroller(TypeService typeService, MainController mainController) {
+    public TypeСontroller(TypeService typeService, MainController mainController) {
         this.typeService = typeService;
         this.mainController = mainController;
     }
@@ -67,7 +64,6 @@ public class Typecontroller {
                                RedirectAttributes ra) {
         try {
             Type type = typeService.get(id);
-
             model.addAttribute("type", type);
             model.addAttribute("pageTitle",
                     "Editing a type with ID: " + id + ":");

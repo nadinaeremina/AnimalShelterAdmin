@@ -21,7 +21,9 @@
     <table class="table table-bordered">
       <thead class="thead-dark">
       <tr>
-        <th>ID</th>
+        <th>
+          <a th:href="@{'/page/' + ${currentPage} + '/types' + '?sortField=id&sortDir=' + ${reverseSortDir}}">ID</a>
+        </th>
         <th>
           <a th:href="@{'/page/' + ${currentPage} + '/types' + '?sortField=title&sortDir=' + ${reverseSortDir}}">Title</a>
         </th>

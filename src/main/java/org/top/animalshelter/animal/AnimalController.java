@@ -39,11 +39,6 @@ public class AnimalController {
         this.mainController = mainController;
     }
 
-    @GetMapping("/")
-    public String showHomePage(Model model) {
-        return mainController.findPaginated(1, "", "nickname", "asc", model);
-    }
-
     @GetMapping("/animals")
     public String showList(Model model, RedirectAttributes ra) {
         try {
@@ -60,14 +55,10 @@ public class AnimalController {
         List<City> listCities = cityService.listAll();
         List<User> listUsers = userService.listAll();
         List<Type> listTypes = typeService.listAll();
-        List<Integer> listBreeds = new ArrayList<Integer>();
-        listBreeds.add(1);
-        listBreeds.add(2);
         model.addAttribute("animalCreateData", new AnimalCreateData());
         model.addAttribute("listCities", listCities);
         model.addAttribute("listUsers", listUsers);
         model.addAttribute("listTypes", listTypes);
-        model.addAttribute("listBreeds", listBreeds);
         model.addAttribute("pageTitle", "Adding a new pet:");
         return "animal_form";
     }
@@ -77,11 +68,11 @@ public class AnimalController {
                              @RequestParam("photo") MultipartFile imageData) throws IOException {
 
         // преобразование полученных данных в формат БД
-        String imageDataAsString= Base64
-                .getEncoder()
-                .encodeToString(
-                        imageData.getBytes()
-                );
+//        String imageDataAsString= Base64
+//                .getEncoder()
+//                .encodeToString(
+//                        imageData.getBytes()
+//                );
 
         try {
             Animal animal = new Animal();
@@ -94,7 +85,7 @@ public class AnimalController {
             animal.setAge(animalCreateData.getAge());
             animal.setNickname(animalCreateData.getNickname());
             animal.setDescription(animalCreateData.getDescription());
-            animal.setPhoto(imageDataAsString);
+            animal.setPhoto(imageData);
 
             // для пользователя заполнили только id и установим данные пользователя в заказе
             User animalUser = userService.get(animalCreateData.getUserId());
@@ -114,10 +105,10 @@ public class AnimalController {
             ra.addFlashAttribute("message", "The Pet with this ID not found!");
             return "redirect:/animals/new";
         } catch (DataAccessException e) {
-            ra.addFlashAttribute("message", "A guardian with this ID was not found.!");
+            ra.addFlashAttribute("message", "Error while working with the database!");
             return "redirect:/animals/new";
         } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", "A guardian with this ID was not found.!");
+            ra.addFlashAttribute("message", "User with this ID was not found.!");
             return "redirect:/animals/new";
         }
     }
@@ -136,7 +127,15 @@ public class AnimalController {
             animalCreateData.setUserId(animal.getUser().getId());
             animalCreateData.setCityId(Integer.toString(animal.getCity().getId()));
             animalCreateData.setTypeId(Integer.toString(animal.getType().getId()));
+            animalCreateData.setPhoto(animalCreateData.getPhoto());
 
+            List<City> listCities = cityService.listAll();
+            List<User> listUsers = userService.listAll();
+            List<Type> listTypes = typeService.listAll();
+
+            model.addAttribute("listCities", listCities);
+            model.addAttribute("listUsers", listUsers);
+            model.addAttribute("listTypes", listTypes);
             model.addAttribute("animalCreateData", animalCreateData);
             model.addAttribute("pageTitle",
                     "Editing a pet with ID: " + id + ":");
