@@ -61,7 +61,7 @@
           <td><img th:src="@{'data:image/jpeg;base64,' + ${animal.photo}}"></td>
           <td>[[${animal.description}]]</td>
           <td>[[${animal.getCityTitle()}]]</td>
-          <td>[[${animal.getUserName()}]]</td>
+          <td>[[${animal.getGuardianName()}]]</td>
           <td>
             <a class="h4 mr-3" th:href="@{'/animals/edit/' + ${animal.id}}">Edit</a>
             <a class="h4" th:href="@{'/animals/delete/' + ${animal.id}}">Delete</a>

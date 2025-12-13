@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.top.animalshelter.guardian.GuardianNotFoundException;
 import org.top.animalshelter.user.UserNotFoundException;
 
 import java.awt.print.Pageable;
@@ -44,10 +45,10 @@ public class AnimalService {
         animalRepository.deleteById(id);
     }
 
-    public List<Animal> showAllByUserId(Integer id) throws UserNotFoundException {
-        List<Animal> animals = animalRepository.findAllByUserId(id);
+    public List<Animal> showAllByGuardianId(Integer id) throws GuardianNotFoundException {
+        List<Animal> animals = animalRepository.findAllByGuardianId(id);
         if (animals.isEmpty()) {
-            throw new UserNotFoundException("Could not find any pets with User ID" + id);
+            throw new GuardianNotFoundException("Could not find any pets with Guardian ID" + id);
         }
         return animals;
     }

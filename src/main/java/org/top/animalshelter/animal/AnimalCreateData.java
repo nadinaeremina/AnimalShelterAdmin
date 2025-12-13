@@ -17,13 +17,13 @@ public class AnimalCreateData {
     private Integer id;
     private String nickname;
     private String typeId;
-    private String breedId;
     private Integer age;
     private Integer yearOfBirth;
     private String description;
     private String cityId;
-    private Integer userId;
+    private Integer guardianId;
     private MultipartFile photo;
+    private String userId;
 
     public AnimalCreateData() {}
 
@@ -35,8 +35,8 @@ public class AnimalCreateData {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getGuardianId() {
+        return guardianId;
     }
 
     public String getDescription() {
@@ -63,8 +63,8 @@ public class AnimalCreateData {
         this.cityId = cityId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setGuardianId(Integer guardianId) {
+        this.guardianId = guardianId;
     }
 
     public void setDescription(String description) {
@@ -111,11 +111,11 @@ public class AnimalCreateData {
         return typeId;
     }
 
-    public String getBreedId() {
-        return breedId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setBreedId(String breedId) {
-        this.breedId = breedId;
+    public void setYearOfBirth(Integer yearOfBirth) {
+        this.yearOfBirth = yearOfBirth;
     }
 }

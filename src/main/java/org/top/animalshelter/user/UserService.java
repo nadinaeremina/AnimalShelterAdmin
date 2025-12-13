@@ -29,14 +29,6 @@ public class UserService {
         return (List<User>) userRepository.findAll();
     }
 
-    public void save(User user) {
-        userRepository.save(user);
-    }
-
-    public boolean isExistByNumber(User user) {
-        return userRepository.existsByNumber(user.getNumber());
-    }
-
     public User get(Integer id) throws UserNotFoundException {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {

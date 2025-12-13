@@ -1,81 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Manage Users</title>
-  <!-- подключение стилей bootstrap -->
-  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <!-- подключение стилей bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
 <div class="container-fluid text-center">
-  <div><h2>Manage Users</h2></div>
-  <div class="m-2">
-    <a class="h3" th:href="@{/users/new}">Add New User</a>
-  </div>
-  <div th:if="${message}" class="alert alert-success text-center">
-    [[${message}]]
-  </div>
-  <div>
-    <table class="table table-bordered">
-      <thead class="thead-dark">
-      <tr>
-        <th>
-          <a th:href="@{'/page/' + ${currentPage} + '/users' + '?sortField=id&sortDir=' + ${reverseSortDir}}">ID</a>
-        </th>
-        <th>
-          <a th:href="@{'/page/' + ${currentPage} + '/users' + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">LastName</a>
-        </th>
-        <th>FirstName</th>
-        <th>Number</th>
-        <th></th>
-      </tr>
-      </thead>
-      <tbody>
-      <th:block th:each="user : ${listUsers}">
-        <tr>
-          <td>[[${user.id}]]</td>
-          <td>[[${user.lastName}]]</td>
-          <td>[[${user.firstName}]]</td>
-          <td>[[${user.number}]]</td>
-          <td>
-            <a class="h4 mr-3" th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
-            <a class="h4" th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
-            <a class="h4" th:href="@{'/users/' + ${user.id}}">Show all pets</a>
-          </td>
-        </tr>
-      </th:block>
-      </tbody>
-    </table>
-  </div>
-  <div th:if = "${totalPages > 1}">
-    <div class = "row col-sm-10">
-      <div class = "col-sm-2">
-        Total Rows: [[${totalItems}]]
-      </div>
-      <div class = "col-sm-1">
+    <div><h2>Manage Users</h2></div>
+    <div th:if="${message}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '/users' + '?sortField=id&sortDir=' + ${reverseSortDir}}">ID</a>
+                </th>
+                <th>
+                    <a th:href="@{'/page/' + ${currentPage} + '/users' + '?sortField=login&sortDir=' + ${reverseSortDir}}">Login</a>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="user : ${listUsers}">
+                <tr>
+                    <td>[[${user.id}]]</td>
+                    <td>[[${user.login}]]</td>
+                    <td>
+                        <a class="h4" th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                     <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '/users' +
                     '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                     <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
                 </span>
-      </div>
-      <div class = "col-sm-1">
-        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '/users' +
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '/users' +
         '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">NEXT</a>
-        <span th:unless="${currentPage < totalPages}">NEXT</span>
-      </div>
-      <div class = "col-sm-1">
-        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '/users' +
+                <span th:unless="${currentPage < totalPages}">NEXT</span>
+            </div>
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '/users' +
         '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">LAST</a>
-        <span th:unless="${currentPage < totalPages}">LAST</span>
-      </div>
+                <span th:unless="${currentPage < totalPages}">LAST</span>
+            </div>
+        </div>
     </div>
-  </div>
-  <div>
-    <a class="h3" th:href="@{/index}">Go back</a>
-  </div>
+    <div>
+        <a class="h3" th:href="@{/index}">Go back</a>
+    </div>
 </div>
-
 <!-- подключение скриптов bootstrap -->
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>

@@ -11,6 +11,8 @@ import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalService;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.city.CityService;
+import org.top.animalshelter.guardian.Guardian;
+import org.top.animalshelter.guardian.GuardianService;
 import org.top.animalshelter.type.Type;
 import org.top.animalshelter.type.TypeService;
 import org.top.animalshelter.user.User;
@@ -25,13 +27,15 @@ public class MainController {
     private final CityService cityService;
     private final UserService userService;
     private final TypeService typeService;
+    private final GuardianService guardianService;
 
     public MainController(AnimalService animalService, CityService cityService, UserService userService,
-                            TypeService typeService) {
+                            TypeService typeService, GuardianService guardianService) {
         this.animalService = animalService;
         this.cityService = cityService;
         this.userService = userService;
         this.typeService = typeService;
+        this.guardianService = guardianService;
     }
 
     @GetMapping("/")
@@ -84,6 +88,13 @@ public class MainController {
             model.addAttribute("totalPages", page.getTotalPages());
             model.addAttribute("totalItems", page.getTotalElements());
             return "types";
+        }  else if (object.equals("guardians")) {
+            Page<Guardian> page = guardianService.findPaginated(pageNumber, pageSize, sortField, sortDir);
+            List<Guardian> listGuardians = page.getContent();
+            model.addAttribute("listGuardians", listGuardians);
+            model.addAttribute("totalPages", page.getTotalPages());
+            model.addAttribute("totalItems", page.getTotalElements());
+            return "guardians";
         }
         return "index";
     }

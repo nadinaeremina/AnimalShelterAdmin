@@ -43,11 +43,8 @@ public class TypeСontroller {
 
     @PostMapping("/types/save")
     public String saveType(Type type, RedirectAttributes ra) {
-        if (!typeService.isExistByBreed(type) && !typeService.isExistByTitle(type)) {
-            typeService.save(type);
-            ra.addFlashAttribute("message", "The type has been saved successfully.");
-        }
-        ra.addFlashAttribute("message", "The type and breed is already exists.");
+        typeService.save(type);
+        ra.addFlashAttribute("message", "The type has been saved successfully.");
         return "redirect:/types";
     }
 

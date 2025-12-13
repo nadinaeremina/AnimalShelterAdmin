@@ -10,6 +10,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.animalshelter.MainController;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.city.CityService;
+import org.top.animalshelter.guardian.Guardian;
+import org.top.animalshelter.guardian.GuardianNotFoundException;
+import org.top.animalshelter.guardian.GuardianService;
 import org.top.animalshelter.type.Type;
 import org.top.animalshelter.type.TypeService;
 import org.top.animalshelter.user.User;
@@ -26,15 +29,15 @@ public class AnimalController {
     @Autowired
     private final AnimalService animalService;
     private final CityService cityService;
-    private final UserService userService;
+    private final GuardianService guardianService;
     private final TypeService typeService;
     private final MainController mainController;
 
-    public AnimalController(AnimalService animalService, CityService cityService, UserService userService,
+    public AnimalController(AnimalService animalService, CityService cityService, GuardianService guardianService,
                             TypeService typeService, MainController mainController) {
         this.animalService = animalService;
         this.cityService = cityService;
-        this.userService = userService;
+        this.guardianService = guardianService;
         this.typeService = typeService;
         this.mainController = mainController;
     }
@@ -53,11 +56,11 @@ public class AnimalController {
     @GetMapping("/animals/new")
     public String showNewForm(Model model) {
         List<City> listCities = cityService.listAll();
-        List<User> listUsers = userService.listAll();
+        List<Guardian> listGuardians = guardianService.listAll();
         List<Type> listTypes = typeService.listAll();
         model.addAttribute("animalCreateData", new AnimalCreateData());
         model.addAttribute("listCities", listCities);
-        model.addAttribute("listUsers", listUsers);
+        model.addAttribute("listGuardians", listGuardians);
         model.addAttribute("listTypes", listTypes);
         model.addAttribute("pageTitle", "Adding a new pet:");
         return "animal_form";
@@ -88,8 +91,8 @@ public class AnimalController {
             animal.setPhoto(imageData);
 
             // для пользователя заполнили только id и установим данные пользователя в заказе
-            User animalUser = userService.get(animalCreateData.getUserId());
-            animal.setUser(animalUser);
+            Guardian animalGuardian = guardianService.get(animalCreateData.getGuardianId());
+            animal.setGuardian(animalGuardian);
 
             City animalCity = cityService.get(Integer.parseInt(animalCreateData.getCityId()));
             animal.setCity(animalCity);
@@ -107,7 +110,7 @@ public class AnimalController {
         } catch (DataAccessException e) {
             ra.addFlashAttribute("message", "Error while working with the database!");
             return "redirect:/animals/new";
-        } catch (UserNotFoundException e) {
+        } catch (GuardianNotFoundException e) {
             ra.addFlashAttribute("message", "User with this ID was not found.!");
             return "redirect:/animals/new";
         }
@@ -124,17 +127,17 @@ public class AnimalController {
             animalCreateData.setId(animal.getId());
             animalCreateData.setAge(animal.getAge());
             animalCreateData.setNickname(animal.getNickname());
-            animalCreateData.setUserId(animal.getUser().getId());
+            animalCreateData.setGuardianId(animal.getUser().getId());
             animalCreateData.setCityId(Integer.toString(animal.getCity().getId()));
             animalCreateData.setTypeId(Integer.toString(animal.getType().getId()));
             animalCreateData.setPhoto(animalCreateData.getPhoto());
 
             List<City> listCities = cityService.listAll();
-            List<User> listUsers = userService.listAll();
+            List<Guardian> listGuardians = guardianService.listAll();
             List<Type> listTypes = typeService.listAll();
 
             model.addAttribute("listCities", listCities);
-            model.addAttribute("listUsers", listUsers);
+            model.addAttribute("listGuardians", listGuardians);
             model.addAttribute("listTypes", listTypes);
             model.addAttribute("animalCreateData", animalCreateData);
             model.addAttribute("pageTitle",

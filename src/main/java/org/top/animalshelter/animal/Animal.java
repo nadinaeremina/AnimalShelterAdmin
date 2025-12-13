@@ -2,20 +2,15 @@ package org.top.animalshelter.animal;
 
 import jakarta.persistence.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.top.animalshelter.card.Card;
 import org.top.animalshelter.city.City;
+import org.top.animalshelter.guardian.Guardian;
 import org.top.animalshelter.type.Type;
 import org.top.animalshelter.user.User;
+import org.top.animalshelter.user.UserRepository;
 
-import javax.sql.rowset.serial.SerialBlob;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.time.Year;
 import java.util.Base64;
-import java.util.Set;
 
 @Entity
 @Table(name = "animals")
@@ -40,10 +35,10 @@ public class Animal {
     @Column(name="description_f", nullable = false, length = 200)
     private String description;
 
-    // связь с сущностью (таблицей) пользователей
+    // связь с сущностью (таблицей) опекунов
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "guardian_id", nullable = false)
+    private Guardian guardian;
 
     // связь с сущностью (таблицей) городов
     @ManyToOne
@@ -55,10 +50,10 @@ public class Animal {
     @JoinColumn(name="type_id", nullable = false)
     private Type type;
 
-    // связь с сущность (таблицей) корзины
+    // связь с сущность (таблицей) юзеров
     @ManyToOne
-    @JoinColumn(name = "card_id")
-    private Card card;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public String getPhoto() {
         return photo;
@@ -107,12 +102,12 @@ public class Animal {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
+    public Guardian getGuardian() {
+        return guardian;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setGuardian(Guardian guardian) {
+        this.guardian = guardian;
     }
 
     public Integer getYearOfBirth() {
@@ -140,8 +135,8 @@ public class Animal {
         return city.getTitle();
     }
 
-    public String getUserName() {
-        return user.toString();
+    public String getGuardianName() {
+        return guardian.toString();
     }
 
     public void setCity(City city) {
@@ -156,11 +151,15 @@ public class Animal {
         return type;
     }
 
-    public Card getCard() {
-        return card;
+    public User getUser() {
+        return user;
     }
 
-    public void setCard(Card card) {
-        this.card = card;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void delUser() {
+        this.user = null;
     }
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Guardians</title>
+  <!-- подключение стилей bootstrap -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+  <div><h2>Manage Guardians</h2></div>
+  <div class="m-2">
+    <a class="h3" th:href="@{/guardians/new}">Add New Guardian</a>
+  </div>
+  <div th:if="${message}" class="alert alert-success text-center">
+    [[${message}]]
+  </div>
+  <div>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>
+          <a th:href="@{'/page/' + ${currentPage} + '/guardians' + '?sortField=id&sortDir=' + ${reverseSortDir}}">ID</a>
+        </th>
+        <th>
+          <a th:href="@{'/page/' + ${currentPage} + '/guardians' + '?sortField=lastName&sortDir=' + ${reverseSortDir}}">LastName</a>
+        </th>
+        <th>FirstName</th>
+        <th>Number</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="guardian : ${listGuardians}">
+        <tr>
+          <td>[[${guardian.id}]]</td>
+          <td>[[${guardian.lastName}]]</td>
+          <td>[[${guardian.firstName}]]</td>
+          <td>[[${guardian.number}]]</td>
+          <td>
+            <a class="h4 mr-3" th:href="@{'/guardians/edit/' + ${guardian.id}}">Edit</a>
+            <a class="h4" th:href="@{'/guardians/delete/' + ${guardian.id}}">Delete</a>
+            <a class="h4" th:href="@{'/guardians/' + ${guardian.id}}">Show all pets</a>
+          </td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+  </div>
+  <div th:if = "${totalPages > 1}">
+    <div class = "row col-sm-10">
+      <div class = "col-sm-2">
+        Total Rows: [[${totalItems}]]
+      </div>
+      <div class = "col-sm-1">
+                <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '/guardians' +
+                    '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                    <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+                </span>
+      </div>
+      <div class = "col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '/guardians' +
+        '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">NEXT</a>
+        <span th:unless="${currentPage < totalPages}">NEXT</span>
+      </div>
+      <div class = "col-sm-1">
+        <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '/guardians' +
+        '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">LAST</a>
+        <span th:unless="${currentPage < totalPages}">LAST</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <a class="h3" th:href="@{/index}">Go back</a>
+  </div>
+</div>
+
+<!-- подключение скриптов bootstrap -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
