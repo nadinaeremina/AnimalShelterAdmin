@@ -23,12 +23,6 @@ public class User {
     @Column(name="role_f", nullable = false, length = 15)
     private String role;
 
-    @Column(name="failed_attempts_t", nullable = false)
-    private Integer failedAttempts = 0;
-
-    @Column(name="locked_until_t")
-    private java.time.LocalDateTime lockedUntil;
-
     // связь с сущность (таблицей) животных
     @OneToMany(mappedBy = "user")
     private Set<Animal> animals;
@@ -67,27 +61,11 @@ public class User {
         return id;
     }
 
-    public LocalDateTime getLockedUntil() {
-        return lockedUntil;
-    }
-
-    public Integer getFailedAttempts() {
-        return failedAttempts;
-    }
-
     public Set<Animal> getAnimals() {
         return animals;
     }
 
     public void setAnimals(Set<Animal> animals) {
         this.animals = animals;
-    }
-
-    public void setLockedUntil(LocalDateTime lockedUntil) {
-        this.lockedUntil = lockedUntil;
-    }
-
-    public void setFailedAttempts(Integer failedAttempts) {
-        this.failedAttempts = failedAttempts;
     }
 }

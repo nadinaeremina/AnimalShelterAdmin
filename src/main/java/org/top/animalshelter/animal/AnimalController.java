@@ -58,10 +58,14 @@ public class AnimalController {
         List<City> listCities = cityService.listAll();
         List<Guardian> listGuardians = guardianService.listAll();
         List<Type> listTypes = typeService.listAll();
+        List<String> listGenders = new ArrayList<>();
+        listGenders.add("М");
+        listGenders.add("Ж");
         model.addAttribute("animalCreateData", new AnimalCreateData());
         model.addAttribute("listCities", listCities);
         model.addAttribute("listGuardians", listGuardians);
         model.addAttribute("listTypes", listTypes);
+        model.addAttribute("listGenders", listGenders);
         model.addAttribute("pageTitle", "Adding a new pet:");
         return "animal_form";
     }
@@ -137,11 +141,15 @@ public class AnimalController {
             List<City> listCities = cityService.listAll();
             List<Guardian> listGuardians = guardianService.listAll();
             List<Type> listTypes = typeService.listAll();
+            List<String> listGenders = new ArrayList<>();
+            listGenders.add("М");
+            listGenders.add("Ж");
 
+            model.addAttribute("animalCreateData", animalCreateData);
             model.addAttribute("listCities", listCities);
             model.addAttribute("listGuardians", listGuardians);
             model.addAttribute("listTypes", listTypes);
-            model.addAttribute("animalCreateData", animalCreateData);
+            model.addAttribute("listGenders", listGenders);
             model.addAttribute("pageTitle",
                     "Editing a pet with ID: " + id + ":");
             return "animal_form";
