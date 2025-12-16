@@ -37,6 +37,9 @@
           <a th:href="@{'/page/' + ${currentPage} + '/animals' + '?sortField=type.breed&sortDir=' + ${reverseSortDir}}">Breed</a>
         </th>
         <th>
+          <a th:href="@{'/page/' + ${currentPage} + '/animals' + '?sortField=gender&sortDir=' + ${reverseSortDir}}">Gender</a>
+        </th>
+        <th>
           <a th:href="@{'/page/' + ${currentPage} + '/animals' + '?sortField=age&sortDir=' + ${reverseSortDir}}">Age</a>
         </th>
         <th>Photo:</th>
@@ -57,6 +60,7 @@
           <td>[[${animal.nickname}]]</td>
           <td>[[${animal.getTypeTitle()}]]</td>
           <td>[[${animal.getTypeBreed()}]]</td>
+          <td>[[${animal.gender}]]</td>
           <td>[[${animal.age}]]</td>
           <td><img th:src="@{'data:image/jpeg;base64,' + ${animal.photo}}"></td>
           <td>[[${animal.description}]]</td>

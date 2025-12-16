@@ -22,6 +22,9 @@ public class Animal {
     @Column(name="nickname_f", nullable = false, length = 45)
     private String nickname;
 
+    @Column(name = "gender_f", nullable = false, length = 1)
+    private String gender;
+
     @Column(name="age_f", nullable = false, length = 3)
     private Integer age;
 
@@ -157,6 +160,14 @@ public class Animal {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public void delUser() {

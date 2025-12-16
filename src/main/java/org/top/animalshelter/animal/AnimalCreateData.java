@@ -16,6 +16,7 @@ import java.util.Base64;
 public class AnimalCreateData {
     private Integer id;
     private String nickname;
+    private String gender;
     private String typeId;
     private Integer age;
     private Integer yearOfBirth;
@@ -100,6 +101,14 @@ public class AnimalCreateData {
 //            this.photo = "";
 //        }
         this.photo = photo;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public void setAge(Integer age) {

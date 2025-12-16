@@ -89,6 +89,7 @@ public class AnimalController {
             animal.setNickname(animalCreateData.getNickname());
             animal.setDescription(animalCreateData.getDescription());
             animal.setPhoto(imageData);
+            animal.setGender(animalCreateData.getGender());
 
             // для пользователя заполнили только id и установим данные пользователя в заказе
             Guardian animalGuardian = guardianService.get(animalCreateData.getGuardianId());
@@ -131,6 +132,7 @@ public class AnimalController {
             animalCreateData.setCityId(Integer.toString(animal.getCity().getId()));
             animalCreateData.setTypeId(Integer.toString(animal.getType().getId()));
             animalCreateData.setPhoto(animalCreateData.getPhoto());
+            animalCreateData.setGender(animal.getGender());
 
             List<City> listCities = cityService.listAll();
             List<Guardian> listGuardians = guardianService.listAll();
