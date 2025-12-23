@@ -1,9 +1,11 @@
 package org.top.animalshelter.user;
 
 import jakarta.persistence.*;
+import org.springframework.lang.Nullable;
 import org.top.animalshelter.animal.Animal;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,8 +26,13 @@ public class User {
     private String role;
 
     // связь с сущность (таблицей) животных
-    @OneToMany(mappedBy = "user")
-    private Set<Animal> animals;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "animal_user",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "animal_id", referencedColumnName="id")
+    )
+    private @Nullable Set<Animal> animals = new HashSet<>();
 
     public User() {}
 

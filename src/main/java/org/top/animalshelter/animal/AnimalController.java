@@ -132,7 +132,7 @@ public class AnimalController {
             animalCreateData.setId(animal.getId());
             animalCreateData.setAge(animal.getAge());
             animalCreateData.setNickname(animal.getNickname());
-            animalCreateData.setGuardianId(animal.getUser().getId());
+            animalCreateData.setGuardianId(animal.getGuardian().getId());
             animalCreateData.setCityId(Integer.toString(animal.getCity().getId()));
             animalCreateData.setTypeId(Integer.toString(animal.getType().getId()));
             animalCreateData.setPhoto(animalCreateData.getPhoto());

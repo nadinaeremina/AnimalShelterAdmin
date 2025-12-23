@@ -1,6 +1,7 @@
 package org.top.animalshelter.animal;
 
 import jakarta.persistence.*;
+import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 import org.top.animalshelter.city.City;
 import org.top.animalshelter.guardian.Guardian;
@@ -11,6 +12,8 @@ import org.top.animalshelter.user.UserRepository;
 import java.io.IOException;
 import java.time.Year;
 import java.util.Base64;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "animals")
@@ -54,9 +57,15 @@ public class Animal {
     private Type type;
 
     // связь с сущность (таблицей) юзеров
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "animal_user",
+            joinColumns = @JoinColumn(name = "animal_id", referencedColumnName="id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName="id")
+    )
+
+    // @ManyToMany(mappedBy = "animals") // Указываем, что связь управляется со стороны Author
+    private @Nullable Set<User> users = new HashSet<>();
 
     public String getPhoto() {
         return photo;
@@ -154,14 +163,6 @@ public class Animal {
         return type;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -170,7 +171,12 @@ public class Animal {
         this.gender = gender;
     }
 
-    public void delUser() {
-        this.user = null;
+    @Nullable
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(@Nullable Set<User> users) {
+        this.users = users;
     }
 }

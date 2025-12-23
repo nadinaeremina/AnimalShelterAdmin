@@ -50,7 +50,7 @@
             </div>
             <div class = "col-sm-1">
                 <span th:each="i: ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}} + '/cities' + '?sortField=' +
+                    <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '/cities' + '?sortField=' +
                    ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
                     <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
                 </span>
