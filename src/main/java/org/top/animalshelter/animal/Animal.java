@@ -38,8 +38,11 @@ public class Animal {
     @Column(name="photo_f", columnDefinition = "MEDIUMBLOB")
     private String photo;
 
-    @Column(name="description_f", nullable = false, length = 200)
+    @Column(name="description_f", nullable = false, length = 400)
     private String description;
+
+    @Column(name = "reserve_f", nullable = false, length = 5)
+    private Boolean reserve;
 
     // связь с сущностью (таблицей) опекунов
     @ManyToOne
@@ -178,5 +181,13 @@ public class Animal {
 
     public void setUsers(@Nullable Set<User> users) {
         this.users = users;
+    }
+
+    public Boolean getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Boolean reserve) {
+        this.reserve = reserve;
     }
 }

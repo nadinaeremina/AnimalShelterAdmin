@@ -94,6 +94,7 @@ public class AnimalController {
             animal.setDescription(animalCreateData.getDescription());
             animal.setPhoto(imageData);
             animal.setGender(animalCreateData.getGender());
+            animal.setReserve(false);
 
             // для пользователя заполнили только id и установим данные пользователя в заказе
             Guardian animalGuardian = guardianService.get(animalCreateData.getGuardianId());

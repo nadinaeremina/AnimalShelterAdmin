@@ -46,7 +46,7 @@ public class SecurityConfiguration {
                         // разрешим доступ ко всем либам "webjars" (например, к 'bootstrap')
                         // здесь доступ разрешен всем авторизованным пользователям
                         r.requestMatchers("/", "webjars/**").permitAll()
-                        .requestMatchers("/animals/**", "/cities/**",
+                                .requestMatchers("/animals/**", "/cities/**",
                                         "/types/**", "/users/**", "/guardians/**").authenticated()
 
                                 // здесь задаем еще и метод
