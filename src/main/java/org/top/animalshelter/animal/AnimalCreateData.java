@@ -89,17 +89,6 @@ public class AnimalCreateData {
     }
 
     public void setPhoto(MultipartFile photo) {
-//        try {
-//            // преобразование полученных данных в формат БД
-//            String imageDataAsString= Base64
-//                    .getEncoder()
-//                    .encodeToString(
-//                            photo.getBytes()
-//                    );
-//            this.photo = imageDataAsString;
-//        } catch (IOException ex) {
-//            this.photo = "";
-//        }
         this.photo = photo;
     }
 

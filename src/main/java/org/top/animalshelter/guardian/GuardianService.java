@@ -36,10 +36,6 @@ public class GuardianService {
         guardianRepository.save(guardian);
     }
 
-//    public boolean isExistByNumber(Guardian guardian) {
-//        return guardianRepository.existsByNumber(guardian.getNumber());
-//    }
-
     public void delete(Integer id) throws GuardianNotFoundException {
         Long count = guardianRepository.countById(id);
         if (count == null || count == 0) {

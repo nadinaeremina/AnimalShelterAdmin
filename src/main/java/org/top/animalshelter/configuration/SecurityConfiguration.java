@@ -48,14 +48,6 @@ public class SecurityConfiguration {
                         r.requestMatchers("/", "webjars/**").permitAll()
                                 .requestMatchers("/animals/**", "/cities/**",
                                         "/types/**", "/users/**", "/guardians/**").hasRole("ADMIN")
-
-                                // здесь задаем еще и метод
-                                // .requestMatchers(HttpMethod.GET, "/myCard/**", "webjars/**").authenticated()
-
-                                // здесь доступ только для админов
-                                //.requestMatchers("/my_card").hasRole("ADMIN")
-                                // значит в 'GrantedAuthority' должно быть указано ROLE_ADMIN
-
                                 // всему остальному мы будем разрешать доступ
                                 .anyRequest().permitAll()
                 // разрешать зайти на форму логина, форма логина доступна всем

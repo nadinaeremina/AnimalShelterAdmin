@@ -28,14 +28,6 @@ public class TypeService {
         typeRepository.save(type);
     }
 
-//    public boolean isExistByTitle(Type type) {
-//        return typeRepository.existsByTitle(type.getTitle());
-//    }
-//
-//    public boolean isExistByBreed(Type type) {
-//        return typeRepository.existsByBreed(type.getBreed());
-//    }
-
     public Type get(Integer id) throws TypeNotFoundException {
         Optional<Type> result = typeRepository.findById(id);
         if (result.isPresent()) {

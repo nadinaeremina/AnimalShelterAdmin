@@ -73,14 +73,6 @@ public class AnimalController {
     @PostMapping("/animals/save")
     public String saveAnimal(AnimalCreateData animalCreateData, RedirectAttributes ra, Model model,
                              @RequestParam("photo") MultipartFile imageData) throws IOException {
-
-        // преобразование полученных данных в формат БД
-//        String imageDataAsString= Base64
-//                .getEncoder()
-//                .encodeToString(
-//                        imageData.getBytes()
-//                );
-
         try {
             Animal animal = new Animal();
 
