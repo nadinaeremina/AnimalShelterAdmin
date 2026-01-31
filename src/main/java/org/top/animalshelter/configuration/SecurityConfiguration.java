@@ -47,7 +47,7 @@ public class SecurityConfiguration {
                         // здесь доступ разрешен всем авторизованным пользователям
                         r.requestMatchers("/", "webjars/**").permitAll()
                                 .requestMatchers("/animals/**", "/cities/**",
-                                        "/types/**", "/users/**", "/guardians/**").authenticated()
+                                        "/types/**", "/users/**", "/guardians/**").hasRole("ADMIN")
 
                                 // здесь задаем еще и метод
                                 // .requestMatchers(HttpMethod.GET, "/myCard/**", "webjars/**").authenticated()
@@ -60,7 +60,10 @@ public class SecurityConfiguration {
                                 .anyRequest().permitAll()
                 // разрешать зайти на форму логина, форма логина доступна всем
         ).formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"))
-                .csrf(AbstractHttpConfigurer::disable);;
+                .csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception
+                .accessDeniedPage("/access-denied") // Кастомная страница
+        );
 
         // сборка конфига защиты
         return http.build();

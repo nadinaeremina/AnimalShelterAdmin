@@ -12,6 +12,8 @@ import org.top.animalshelter.animal.Animal;
 import org.top.animalshelter.animal.AnimalService;
 import org.top.animalshelter.type.Type;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -23,6 +25,12 @@ public class UserController {
     public UserController(UserService userService, MainController mainController) {
         this.userService = userService;
         this.mainController = mainController;
+    }
+
+    @GetMapping("/access-denied")
+    public String accessDenied(Model model) {
+        model.addAttribute("message", "У вас нет прав для доступа к этой странице");
+        return "error";
     }
 
     @GetMapping("/users")
